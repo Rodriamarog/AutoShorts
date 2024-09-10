@@ -34,18 +34,15 @@ IMPORTANT: Provide ONLY the story text. Do not include any introductory comments
 Now, write the story:
 """
     
-    response = anthropic.completions.create(
+    response = anthropic.messages.create(
         model=config.MODEL,
-        max_tokens_to_sample=config.MAX_TOKENS,
-        prompt=f"{anthropic.HUMAN_PROMPT} {prompt}{anthropic.AI_PROMPT}",
+        max_tokens=config.MAX_TOKENS,
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
     )
     
-    # Strip any leading or trailing whitespace and remove any potential meta-commentary
-    story = response.completion.strip()
-    if ":" in story:
-        story = story.split(":", 1)[1].strip()
-    
-    return story
+    return response.content[0].text.strip()
 
 def main():
     subjects = read_subjects(config.STORY_SUBJECTS_PATH)
@@ -57,9 +54,9 @@ def main():
         print(f"\nGenerated story about {subject}:\n\n{story}")
         print("\n" + "="*50 + "\n")  # Separator between stories
 
-        # Add a delay between API calls to avoid rate limiting
-        time.sleep(1)  # Wait for 1 second between stories
+        # Optional: add a delay between API calls to avoid rate limiting
+        if index < total_subjects:
+            time.sleep(1)
 
 if __name__ == "__main__":
     main()
-

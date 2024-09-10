@@ -14,7 +14,7 @@ class Config:
     # File Paths
     OUTPUT_DIR = os.getenv('OUTPUT_DIR', 'output')
     BACKGROUND_VIDEO_PATH = os.getenv('BACKGROUND_VIDEO_PATH', 'assets/background.mp4')
-    STORY_SUBJECTS_PATH = os.getenv('STORY_SUBJECTS_PATH', 'content_generation/subjects.txt')
+    STORY_SUBJECTS_PATH = os.getenv('STORY_SUBJECTS_PATH', 'src/content_generation/subjects.txt')
 
     # Story Generation Settings
     MAX_STORY_LENGTH = int(os.getenv('MAX_STORY_LENGTH', 280))  # e.g., for Twitter-length stories
